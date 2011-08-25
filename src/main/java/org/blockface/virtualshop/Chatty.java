@@ -1,5 +1,6 @@
 package org.blockface.virtualshop;
 
+import org.blockface.virtualshop.managers.EconomyManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
