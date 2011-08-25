@@ -1,10 +1,7 @@
 package org.blockface.virtualshop.managers;
 
-import org.blockface.virtualshop.VirtualShop;
 import org.bukkit.util.config.Configuration;
 import org.bukkit.plugin.Plugin;
-
-import java.io.File;
 
 public class ConfigManager
 {
@@ -20,6 +17,7 @@ public class ConfigManager
         MySQLHost();
         MySQLdatabase();
         MySQLport();
+        MySQLPassword();
         config.save();
     }
 

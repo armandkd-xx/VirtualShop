@@ -57,7 +57,7 @@ public class MySQL implements Database
 	{
         try
         {
-				mysqldb.deleteQuery(query);
+            mysqldb.deleteQuery(query);
         }
         catch (Exception e)
         {
@@ -82,6 +82,7 @@ public class MySQL implements Database
 	{
 			try
 			{
+                Chatty.LogInfo(query);
 				mysqldb.insertQuery(query);
 			}
 			catch (Exception e)

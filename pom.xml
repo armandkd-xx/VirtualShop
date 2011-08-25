@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.blockface.virtualshop</groupId>
-  <artifactId>VirtualShop</artifactId>
+  <artifactId>VirtualShop3</artifactId>
   <version>0.1</version>
-  <name>VirtualShop</name>
+  <name>VirtualShop3</name>
   <url>http://blockface.org/</url>
   <repositories>
     <repository>
@@ -67,6 +67,7 @@
         <directory>${basedir}/src/main/resources/</directory>
         <includes>
           <include>plugin.yml</include>
+          <include>items.csv</include>
         </includes>
       </resource>
     </resources>

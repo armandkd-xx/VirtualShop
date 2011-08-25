@@ -8,6 +8,6 @@ public class ServerEvents extends ServerListener {
 
     @Override
     public void onPluginEnable(PluginEnableEvent event) {
-        EconomyManager.
+        EconomyManager.Initialize(event.getPlugin());
     }
 }
