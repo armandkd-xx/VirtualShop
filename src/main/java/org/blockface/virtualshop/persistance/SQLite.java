@@ -11,7 +11,7 @@ public class SQLite implements Database
 
     public void Load() throws Exception
     {
-        db = new sqlCore(Chatty.getLogger(), Chatty.getPrefix(), "VirtualShop3", "plugins/VirtualShop3/");
+        db = new sqlCore(Chatty.getLogger(), Chatty.getPrefix(), "VirtualShop", "plugins/VirtualShop/");
 		db.initialize();
 		if(!db.checkConnection())
 		{

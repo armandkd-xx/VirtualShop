@@ -23,6 +23,11 @@ public class Buy {
 			Chatty.DenyConsole(sender);
 			return;
 		}
+        if(!sender.hasPermission("virtualshop.buy"))
+        {
+            Chatty.NoPermissions(sender);
+            return;
+        }
 		if(args.length < 2)
 		{
 			Chatty.SendError(sender, "Proper usage is /buy <amount> <item>");

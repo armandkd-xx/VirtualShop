@@ -82,4 +82,31 @@ public class DatabaseManager
 		String query = "insert into transactions(seller,buyer,item,amount,cost,damage) values('" +transaction.seller +"','"+ transaction.buyer + "'," + transaction.item.getTypeId() + ","+ transaction.item.getAmount() +","+transaction.cost+","+transaction.item.getDurability()+")";
 		database.InsertQuery(query);
 	}
+
+    public static List<Offer> GetBestPrices()
+    {
+        String query = "select f.* from (select item,min(price) as minprice from stock group by item) as x inner join stock as f on f.item = x.item and f.price = x.minprice";
+        return Offer.ListOffers(database.SelectQuery(query));
+    }
+
+    public static List<Offer> SearchBySeller(String seller)
+    {
+		return Offer.ListOffers(database.SelectQuery("select * from stock where seller like '%" + seller +  "%'"));
+    }
+
+    public static List<Transaction> GetTransactions()
+	{
+		return Transaction.ListTransactions(database.SelectQuery("select * from transactions order by id desc"));
+	}
+
+	public static List<Transaction> GetTransactions(String search)
+	{
+		return Transaction.ListTransactions(database.SelectQuery("select * from transactions where seller like '%" + search +"%' OR buyer like '%" + search +"%' order by id"));
+	}
+
+    public static List<Offer> GetPrices(ItemStack item)
+	{
+		String query = "select * from stock where item=" + item.getTypeId() + " AND damage=" + item.getDurability() + " order by price asc limit 0,10";
+		return Offer.ListOffers(database.SelectQuery(query));
+	}
 }

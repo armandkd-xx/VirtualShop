@@ -16,16 +16,32 @@ commands:
     cancel:
         description: Removes items from VirtualShop.
         usage: /cancel <item>
-    price:
+    find:
         description: Find offers for an item.
         usage: /price <item>
-    list:
+    stock:
         description: List items for sale.
         usage: /list [player] [page]
     sales:
         description: See sales that have been made.
         usage: /sales [player] [page]
+    vs:
+        description: Displays help.
+        usage: /vs
+
 permissions:
     virtualshop.sell:
         description: Allow usage of /sell
+        default: true
+    virtualshop.buy:
+        description: Allow usage of /buy
+        default: true
+    virtualshop.cancel:
+        description: Allow usage of /cancel
+        default: true
+    virtualshop.stock:
+        description: Allow usage of /stock
+        default: true
+    virtualshop.sales:
+        description: Allow usage of /sales
         default: true

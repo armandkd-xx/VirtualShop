@@ -2,6 +2,7 @@ package org.blockface.virtualshop;
 
 import org.blockface.virtualshop.managers.EconomyManager;
 import org.blockface.virtualshop.objects.Offer;
+import org.blockface.virtualshop.objects.Transaction;
 import org.blockface.virtualshop.util.ItemDb;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,7 +22,7 @@ public class Chatty
     {
 		logger = Logger.getLogger("minecraft");
         plugin = p;
-        prefix = ChatColor.DARK_GREEN + "[" + plugin.getDescription().getName() + "] " + ChatColor.WHITE;
+        prefix = "[Shop] " + ChatColor.WHITE;
         LogInfo(plugin.getDescription().getName() + " is loading.");
     }
 
@@ -32,12 +33,12 @@ public class Chatty
 
     public static void SendError(CommandSender sender, String message)
     {
-        sender.sendMessage(prefix + ChatColor.RED + message);
+        sender.sendMessage(ChatColor.RED + prefix  + message);
     }
 
     public static void SendSuccess(CommandSender sender, String message)
     {
-        sender.sendMessage(prefix + ChatColor.GREEN + message);
+        sender.sendMessage(ChatColor.DARK_GREEN + prefix  + message);
     }
 
     public static Boolean SendSuccess(String sender, String message)
@@ -49,7 +50,7 @@ public class Chatty
 
     public static void SendGlobal(String message)
     {
-        plugin.getServer().broadcastMessage(prefix  + message);
+        plugin.getServer().broadcastMessage(ChatColor.DARK_GREEN + prefix  + message);
     }
 
     public static Logger getLogger() {
@@ -106,8 +107,19 @@ public class Chatty
 		SendError(sender, "You do not have permission to do this");
 	}
 
-     public static void BroadcastOffer(Offer o) {
-         SendGlobal(FormatSeller(o.seller) + " is selling " + FormatAmount(o.item.getAmount()) + " " + FormatItem(ItemDb.reverseLookup(o.item)) + " for " + FormatPrice(o.price) + " each.");
+    public static void BroadcastOffer(Offer o) {
+         SendGlobal(FormatOffer(o));
     }
+
+    public static String FormatOffer(Offer o)
+    {
+        return FormatSeller(o.seller) + ": " + FormatAmount(o.item.getAmount()) + " " + FormatItem(ItemDb.reverseLookup(o.item)) + " for " + FormatPrice(o.price) + " each.";
+    }
+
+    public static String FormatTransaction(Transaction t)
+	{
+		return FormatSeller(t.seller)+ " --> " + FormatBuyer(t.buyer) + ": " + FormatAmount(t.item.getAmount())+" " + FormatItem(ItemDb.reverseLookup(t.item)) + " for "+ FormatPrice(t.cost);
+
+	}
 
 }
