@@ -1,6 +1,6 @@
 package org.blockface.virtualshop.persistance;
 
-import com.sqlLibrary.SQLite.sqlCore;
+import com.alta189.sqlLibrary.SQLite.*;
 import org.blockface.virtualshop.Chatty;
 
 import java.sql.ResultSet;

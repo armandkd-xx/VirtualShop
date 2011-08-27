@@ -15,6 +15,11 @@ public class Find
 {
     public static void Execute(CommandSender sender, String[] args)
     {
+        if(!sender.hasPermission("virtualshop.find"))
+        {
+            Chatty.NoPermissions(sender);
+            return;
+        }
         if(args.length < 1)
 		{
 			Chatty.SendError(sender, "You need to specify the item.");

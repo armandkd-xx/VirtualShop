@@ -1,6 +1,6 @@
 package org.blockface.virtualshop.persistance;
 
-import com.sqlLibrary.MySQL.mysqlCore;
+import com.alta189.sqlLibrary.MySQL.*;
 import org.blockface.virtualshop.Chatty;
 import org.blockface.virtualshop.managers.ConfigManager;
 
@@ -19,6 +19,7 @@ public class MySQL implements Database
 			{
 				Chatty.LogInfo("Successfully connected to MySQL Database");
 				CheckTables(mysqldb);
+                return;
 			}
 			Chatty.LogInfo("Could not connect to MySQL Database. Check settings.");
     }

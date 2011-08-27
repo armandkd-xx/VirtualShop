@@ -66,7 +66,7 @@ public class Buy {
         for(Offer o: DatabaseManager.GetItemOffers(item))
         {
             if(o.price > maxprice) continue;
-            //if(o.seller.equals(player.getName())) return;
+            if(o.seller.equals(player.getName())) return;
             if((amount - bought) >= o.item.getAmount())
             {
                 int canbuy = o.item.getAmount();

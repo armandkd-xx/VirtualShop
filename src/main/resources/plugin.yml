@@ -4,6 +4,7 @@ description: Allows players to buy and sell goods on a VirtualShop.
 main: ${project.groupId}.${project.name}
 name: ${project.name}
 startup: postworld
+
 url: http://blockface.org/
 version: ${project.version}
 commands:
@@ -35,6 +36,9 @@ permissions:
         default: true
     virtualshop.buy:
         description: Allow usage of /buy
+        default: true
+    virtualshop.find:
+        description: Allow usage of /find
         default: true
     virtualshop.cancel:
         description: Allow usage of /cancel
