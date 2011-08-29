@@ -74,6 +74,13 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>cosine.boseconomy</groupId>
+      <artifactId>BOSEconomy7</artifactId>
+      <version>1.0</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>com.nijiko</groupId>
       <artifactId>iCo5</artifactId>
       <version>1.0</version>
