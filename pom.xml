@@ -28,32 +28,12 @@
         <version>2.3.1</version>
         <executions>
           <execution>
-            <id>Test</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>T:/minecraft/plugins/</outputDirectory>
-              <finalName>${project.name}</finalName>
-            </configuration>
-          </execution>
-          <execution>
             <id>Publish</id>
             <goals>
               <goal>jar</goal>
             </goals>
             <configuration>
               <outputDirectory>${basedir}/bin/</outputDirectory>
-              <finalName>${project.name}</finalName>
-            </configuration>
-          </execution>
-          <execution>
-            <id>Repo</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>T:/www/repo/plugins/</outputDirectory>
               <finalName>${project.name}</finalName>
             </configuration>
           </execution>
