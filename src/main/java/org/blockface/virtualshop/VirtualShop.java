@@ -1,5 +1,6 @@
 package org.blockface.virtualshop;
 
+import org.blockface.stats.CallHome;
 import org.blockface.virtualshop.commands.*;
 import org.blockface.virtualshop.events.ServerEvents;
 import org.blockface.virtualshop.managers.ConfigManager;
@@ -33,6 +34,9 @@ public class VirtualShop extends JavaPlugin {
     private void RegisterEvents()
     {
         PluginManager pm = this.getServer().getPluginManager();
+        //Call Home
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this,new CallHome(this),0L,20L*60L*10);
+
         pm.registerEvent(Event.Type.PLUGIN_ENABLE, new ServerEvents(), Event.Priority.Normal, this);
     }
 
