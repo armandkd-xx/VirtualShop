@@ -24,6 +24,14 @@ public class MySQL implements Database
 			Chatty.LogInfo("Could not connect to MySQL Database. Check settings.");
     }
 
+    private void reconnect() {
+        try {
+            Load();
+        } catch (Exception e) {
+            Chatty.LogInfo("MySQL error, check connection.");
+        }
+    }
+
 
     private void CheckTables(mysqlCore Database) throws Exception
 	{
@@ -49,8 +57,8 @@ public class MySQL implements Database
         }
         catch (Exception e)
         {
-            Chatty.LogInfo("MySQL error, check connection.");
-            return null;
+            reconnect();
+            return SelectQuery(query);
         }
 	}
 
@@ -62,7 +70,8 @@ public class MySQL implements Database
         }
         catch (Exception e)
         {
-            Chatty.LogInfo("MySQL error, check connection.");
+            reconnect();
+            DeleteQuery(query);
         }
 	}
 
@@ -74,7 +83,8 @@ public class MySQL implements Database
         }
         catch (Exception e)
         {
-            Chatty.LogInfo("MySQL error, check connection.");
+            reconnect();
+            UpdateQuery(query);
         }
 
 	}
@@ -88,7 +98,8 @@ public class MySQL implements Database
 			}
 			catch (Exception e)
 			{
-				Chatty.LogInfo("MySQL error, check connection.");
+                reconnect();
+                InsertQuery(query);
 			}
 	}
 }
