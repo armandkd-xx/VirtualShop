@@ -1,5 +1,6 @@
 package org.blockface.virtualshop;
 
+import org.blockface.bukkitstats.CallHome;
 import org.blockface.virtualshop.commands.*;
 import org.blockface.virtualshop.events.ServerEvents;
 import org.blockface.virtualshop.managers.ConfigManager;
@@ -34,7 +35,7 @@ public class VirtualShop extends JavaPlugin {
     {
         PluginManager pm = this.getServer().getPluginManager();
         //Call Home
-        blockface.stats.CallHome.load(this);
+        CallHome.load(this);
 
         pm.registerEvent(Event.Type.PLUGIN_ENABLE, new ServerEvents(), Event.Priority.Normal, this);
     }
