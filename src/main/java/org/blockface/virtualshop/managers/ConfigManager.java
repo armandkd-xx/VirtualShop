@@ -18,6 +18,7 @@ public class ConfigManager
         MySQLdatabase();
         MySQLport();
         MySQLPassword();
+        getPort();
         config.save();
     }
 
@@ -25,6 +26,11 @@ public class ConfigManager
 	{
 		return config.getBoolean("broadcast-offers", true);
 	}
+
+    public static Integer getPort() {
+        return config.getInt("MySQL.port",3306);
+    }
+
 	public static Boolean UsingMySQL()
 	{
 		return config.getBoolean("using-MySQL", false);
