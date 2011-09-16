@@ -1,10 +1,8 @@
 package org.blockface.virtualshop.persistance;
 
-import com.alta189.sqlLibrary.MySQL.*;
 import lib.PatPeter.SQLibrary.MySQL;
 import org.blockface.virtualshop.Chatty;
 import org.blockface.virtualshop.managers.ConfigManager;
-import sun.security.krb5.Config;
 
 import java.net.MalformedURLException;
 import java.sql.ResultSet;
