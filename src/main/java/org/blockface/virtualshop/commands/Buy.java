@@ -1,6 +1,6 @@
 package org.blockface.virtualshop.commands;
 
-import com.nijikokun.register.payment.Method;
+import com.LRFLEW.register.payment.Method;
 import org.blockface.virtualshop.Chatty;
 import org.blockface.virtualshop.managers.DatabaseManager;
 import org.blockface.virtualshop.managers.EconomyManager;
