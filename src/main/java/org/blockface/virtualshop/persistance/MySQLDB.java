@@ -4,7 +4,6 @@ import lib.PatPeter.SQLibrary.MySQL;
 import org.blockface.virtualshop.Chatty;
 import org.blockface.virtualshop.managers.ConfigManager;
 
-import java.net.MalformedURLException;
 import java.sql.ResultSet;
 
 public class MySQLDB implements Database
