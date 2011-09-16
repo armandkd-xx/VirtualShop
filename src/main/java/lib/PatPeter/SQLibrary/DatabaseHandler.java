@@ -60,7 +60,7 @@ public abstract class DatabaseHandler {
 	 */
 	protected void writeInfo(String toWrite) {
 		if (toWrite != null) {
-			this.log.info(this.PREFIX + this.DATABASE_PREFIX + toWrite);
+			//this.log.info(this.PREFIX + this.DATABASE_PREFIX + toWrite);
 		}
 	}
 	
@@ -75,13 +75,15 @@ public abstract class DatabaseHandler {
 	 * @param severe - whether console output should appear as an error or warning.
 	 */
 	protected void writeError(String toWrite, boolean severe) {
-		if (toWrite != null) {
+		/*
+        if (toWrite != null) {
 			if (severe) {
 				this.log.severe(this.PREFIX + this.DATABASE_PREFIX + toWrite);
 			} else {
 				this.log.warning(this.PREFIX + this.DATABASE_PREFIX + toWrite);
 			}
 		}
+		*/
 	}
 	
 	/**
