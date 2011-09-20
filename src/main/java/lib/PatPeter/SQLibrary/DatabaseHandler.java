@@ -75,7 +75,6 @@ public abstract class DatabaseHandler {
 	 * @param severe - whether console output should appear as an error or warning.
 	 */
 	protected void writeError(String toWrite, boolean severe) {
-		/*
         if (toWrite != null) {
 			if (severe) {
 				this.log.severe(this.PREFIX + this.DATABASE_PREFIX + toWrite);
@@ -83,7 +82,6 @@ public abstract class DatabaseHandler {
 				this.log.warning(this.PREFIX + this.DATABASE_PREFIX + toWrite);
 			}
 		}
-		*/
 	}
 	
 	/**
@@ -164,33 +162,33 @@ public abstract class DatabaseHandler {
 	 */
 	protected Statements getStatement(String query) {
 		String trimmedQuery = query.trim();
-		if (trimmedQuery.substring(0,6).equals("SELECT"))
+		if (trimmedQuery.substring(0,6).equalsIgnoreCase("SELECT"))
 			return Statements.SELECT;
-		else if (trimmedQuery.substring(0,6).equals("INSERT"))
+		else if (trimmedQuery.substring(0,6).equalsIgnoreCase("INSERT"))
 			return Statements.INSERT;
-		else if (trimmedQuery.substring(0,6).equals("UPDATE"))
+		else if (trimmedQuery.substring(0,6).equalsIgnoreCase("UPDATE"))
 			return Statements.UPDATE;
-		else if (trimmedQuery.substring(0,6).equals("DELETE"))
+		else if (trimmedQuery.substring(0,6).equalsIgnoreCase("DELETE"))
 			return Statements.DELETE;
-		else if (trimmedQuery.substring(0,6).equals("CREATE"))
+		else if (trimmedQuery.substring(0,6).equalsIgnoreCase("CREATE"))
 			return Statements.CREATE;
-		else if (trimmedQuery.substring(0,5).equals("ALTER"))
+		else if (trimmedQuery.substring(0,5).equalsIgnoreCase("ALTER"))
 			return Statements.ALTER;
-		else if (trimmedQuery.substring(0,4).equals("DROP"))
+		else if (trimmedQuery.substring(0,4).equalsIgnoreCase("DROP"))
 			return Statements.DROP;
-		else if (trimmedQuery.substring(0,8).equals("TRUNCATE"))
+		else if (trimmedQuery.substring(0,8).equalsIgnoreCase("TRUNCATE"))
 			return Statements.TRUNCATE;
-		else if (trimmedQuery.substring(0,6).equals("RENAME"))
+		else if (trimmedQuery.substring(0,6).equalsIgnoreCase("RENAME"))
 			return Statements.RENAME;
-		else if (trimmedQuery.substring(0,2).equals("DO"))
+		else if (trimmedQuery.substring(0,2).equalsIgnoreCase("DO"))
 			return Statements.DO;
-		else if (trimmedQuery.substring(0,7).equals("REPLACE"))
+		else if (trimmedQuery.substring(0,7).equalsIgnoreCase("REPLACE"))
 			return Statements.REPLACE;
-		else if (trimmedQuery.substring(0,4).equals("LOAD"))
+		else if (trimmedQuery.substring(0,4).equalsIgnoreCase("LOAD"))
 			return Statements.LOAD;
-		else if (trimmedQuery.substring(0,7).equals("HANDLER"))
+		else if (trimmedQuery.substring(0,7).equalsIgnoreCase("HANDLER"))
 			return Statements.HANDLER;
-		else if (trimmedQuery.substring(0,4).equals("CALL"))
+		else if (trimmedQuery.substring(0,4).equalsIgnoreCase("CALL"))
 			return Statements.CALL;
 		else
 			return Statements.SELECT;
