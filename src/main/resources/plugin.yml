@@ -2,7 +2,7 @@
 database: false
 description: Allows players to buy and sell goods on a VirtualShop.
 main: ${project.groupId}.${project.name}
-name: ${project.name}-${BUILD_NUMBER}
+name: ${project.name}-${build.number}
 startup: postworld
 
 url: http://blockface.org/
