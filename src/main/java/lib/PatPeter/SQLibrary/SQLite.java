@@ -132,7 +132,7 @@ public class SQLite extends DatabaseHandler {
 					return result;
 					
 				default:
-					statement.executeQuery(query);
+					statement.execute(query);
 					return result;	
 			}
 		} catch (SQLException ex) {
@@ -255,7 +255,7 @@ public class SQLite extends DatabaseHandler {
 				return result;
 			} catch (SQLException ex) {
 				if (ex.getMessage().toLowerCase().contains("locking") || ex.getMessage().toLowerCase().contains("locked")) {
-					passed = false;
+                    passed = false;
 				} else {
 					this.writeError("Error at SQL Query: " + ex.getMessage(), false);
 				}
