@@ -13,6 +13,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 
 public class Buy {
 
@@ -62,8 +64,12 @@ public class Buy {
         int bought = 0;
         double spent = 0;
         InventoryManager im = new InventoryManager(player);
-
-        for(Offer o: DatabaseManager.GetItemOffers(item))
+        List<Offer> offers = DatabaseManager.GetItemOffers(item);
+        if(offers.size()==0) {
+            Chatty.SendError(sender,"There is no " + Chatty.FormatItem(args[1])+ " for sale.");
+            return;
+        }
+        for(Offer o: offers)
         {
             if(o.price > maxprice) continue;
             if(o.seller.equals(player.getName())) return;
@@ -124,12 +130,8 @@ public class Buy {
 
         }
 
-        if(bought==0) Chatty.SendError(sender,"There is no " + Chatty.FormatItem(args[1])+ " for sale.");
-        else
-        {
-            item.setAmount(bought);
-            im.addItem(item);
-            Chatty.SendSuccess(player,"Managed to buy " + Chatty.FormatAmount(bought) + " " + Chatty.FormatItem(args[1]) + " for " + Chatty.FormatPrice(spent));
-        }
+        item.setAmount(bought);
+        im.addItem(item);
+        Chatty.SendSuccess(player,"Managed to buy " + Chatty.FormatAmount(bought) + " " + Chatty.FormatItem(args[1]) + " for " + Chatty.FormatPrice(spent));
     }
 }
