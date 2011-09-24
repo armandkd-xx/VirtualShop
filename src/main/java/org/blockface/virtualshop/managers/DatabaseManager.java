@@ -39,6 +39,10 @@ public class DatabaseManager
         }
     }
 
+    public static void Close() {
+        database.Unload();
+    }
+
     public static void AddOffer(Offer offer)
 	{
 			String query = "insert into stock(seller,item,amount,price,damage) values('" +offer.seller +"',"+ offer.item.getType().getId() + ","+offer.item.getAmount() +","+offer.price+"," + offer.item.getDurability()+")";

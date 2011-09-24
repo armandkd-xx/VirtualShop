@@ -44,4 +44,8 @@ public class SQLiteDB implements Database
 		return db.query(query);
 	}
 
+    public void Unload() {
+        db.close();
+    }
+
 }

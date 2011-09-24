@@ -33,6 +33,10 @@ public class MySQLDB implements Database
         }
     }
 
+    public void Unload() {
+        db.close();
+    }
+
 
     private void reconnect() {
         try {

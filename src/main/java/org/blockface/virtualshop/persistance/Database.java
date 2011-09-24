@@ -7,4 +7,6 @@ public interface Database
     public void Load() throws Exception;
 
     public ResultSet Query(String query);
+
+    public void Unload();
 }
