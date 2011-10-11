@@ -130,8 +130,12 @@ public class Buy {
 
         }
 
-        item.setAmount(bought);
-        im.addItem(item);
-        Chatty.SendSuccess(player,"Managed to buy " + Chatty.FormatAmount(bought) + " " + Chatty.FormatItem(args[1]) + " for " + Chatty.FormatPrice(spent));
-    }
+        if(bought > 0) {
+	        item.setAmount(bought);
+	        im.addItem(item);
+	        Chatty.SendSuccess(player,"Managed to buy " + Chatty.FormatAmount(bought) + " " + Chatty.FormatItem(args[1]) + " for " + Chatty.FormatPrice(spent));
+        } else {
+        	Chatty.SendError(player,"Unable to buy any " + Chatty.FormatItem(args[1]));
+        }
+	}
 }
