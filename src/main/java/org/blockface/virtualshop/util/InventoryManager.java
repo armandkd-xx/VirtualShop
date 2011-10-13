@@ -118,7 +118,8 @@ public class InventoryManager {
         
         int drops = 0;
         if((amount>0)&&((_player!=null)||(_loc!=null))) 
-            for(; amount>0 && (max_drops >= 0 ? ((drops+max) <= max_drops) : true); amount -= max) {
+            for(; amount>0 && (max_drops >= 0 ? (drops+((amount>max)?max:amount) <= max_drops) : true); amount -= max) {
+                
                 ((_player!=null) ? 
                         (_player.getLocation()) : 
                         (_loc)).getWorld().dropItemNaturally(((_player!=null) ? 
