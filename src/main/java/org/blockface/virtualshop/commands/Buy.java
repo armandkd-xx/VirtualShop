@@ -73,69 +73,56 @@ public class Buy {
         {
             if(o.price > maxprice) continue;
             if(o.seller.equals(player.getName())) return;
+            int canbuy = 0;
+            double cost = 0;
             if((amount - bought) >= o.item.getAmount())
             {
-                int canbuy = o.item.getAmount();
-                double cost = o.price * canbuy;
+                canbuy = o.item.getAmount();
+                cost = o.price * canbuy;
 
-                //Revise amounts if not enough money.
-                if(!account.hasEnough(cost))
-                {
-                    canbuy = (int)(account.balance() / o.price);
-                    cost = canbuy*o.price;
-                    if(canbuy < 1)
-                    {
-							Chatty.SendError(player,"Ran out of money!");
-							break;
-                    }
-                }
-                bought += canbuy;
-                spent += cost;
-                account.subtract(cost);
-                EconomyManager.getMethod().getAccount(o.seller).add(cost);
-                Chatty.SendSuccess(o.seller, Chatty.FormatSeller(player.getName()) + " just bought " + Chatty.FormatAmount(canbuy) + " " + Chatty.FormatItem(args[1]) + " for " + Chatty.FormatPrice(cost));
-                int left = o.item.getAmount() - canbuy;
-                if(left < 1) DatabaseManager.DeleteItem(o.id);
-                else DatabaseManager.UpdateQuantity(o.id, left);
-                Transaction t = new Transaction(o.seller, player.getName(), o.item.getTypeId(), o.item.getDurability(), canbuy, cost);
-                DatabaseManager.LogTransaction(t);
             }
             else
             {
-                int canbuy = amount - bought;
-                double cost = canbuy * o.price;
-
-                //Revise amounts if not enough money.
-                if(!account.hasEnough(cost))
+                canbuy = amount - bought;
+                cost = canbuy * o.price;
+            }
+            
+            //Revise amounts if not enough money.
+            if(!account.hasEnough(cost))
+            {
+                canbuy = (int)(account.balance() / o.price);
+                cost = canbuy*o.price;
+                if(canbuy < 1)
                 {
-                    canbuy = (int)(account.balance() / o.price);
-                    cost = canbuy*o.price;
-                    if(canbuy < 1)
-                    {
-							Chatty.SendError(player,"Ran out of money!");
-							break;
-                    }
+                                                    Chatty.SendError(player,"Ran out of money!");
+                                                    break;
                 }
-                bought += canbuy;
-                spent += cost;
-                account.subtract(cost);
-                EconomyManager.getMethod().getAccount(o.seller).add(cost);
-                Chatty.SendSuccess(o.seller, Chatty.FormatSeller(player.getName()) + " just bought " + Chatty.FormatAmount(canbuy) + " " + Chatty.FormatItem(args[1]) + " for " + Chatty.FormatPrice(cost));
-                int left = o.item.getAmount() - canbuy;
-                DatabaseManager.UpdateQuantity(o.id, left);
-                Transaction t = new Transaction(o.seller, player.getName(), o.item.getTypeId(), o.item.getDurability(), canbuy, cost);
-                DatabaseManager.LogTransaction(t);
+            }
+            item.setAmount(canbuy);
+            int overflow = im.addItem(item).getAmount();
+            canbuy = canbuy - overflow;
+            bought += canbuy;
+            cost = canbuy*o.price;
+            spent += cost;
+            account.subtract(cost);
+            EconomyManager.getMethod().getAccount(o.seller).add(cost);
+            Chatty.SendSuccess(o.seller, Chatty.FormatSeller(player.getName()) + " just bought " + Chatty.FormatAmount(canbuy) + " " + Chatty.FormatItem(args[1]) + " for " + Chatty.FormatPrice(cost));
+            int left = o.item.getAmount() - canbuy;
+            if(left < 1) DatabaseManager.DeleteItem(o.id);
+            else DatabaseManager.UpdateQuantity(o.id, left);
+            Transaction t = new Transaction(o.seller, player.getName(), o.item.getTypeId(), o.item.getDurability(), canbuy, cost);
+            DatabaseManager.LogTransaction(t);
+            if(overflow > 0) {
+                Chatty.SendError(player,"Unable to complete purchase, inventory full and no more drops allowed.");
+                break;
             }
             if(bought >= amount) break;
-
         }
 
         if(bought > 0) {
-	        item.setAmount(bought);
-	        im.addItem(item);
 	        Chatty.SendSuccess(player,"Managed to buy " + Chatty.FormatAmount(bought) + " " + Chatty.FormatItem(args[1]) + " for " + Chatty.FormatPrice(spent));
         } else {
         	Chatty.SendError(player,"Unable to buy any " + Chatty.FormatItem(args[1]));
         }
-	}
+        }
 }

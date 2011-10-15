@@ -38,9 +38,12 @@ public class Cancel {
 		}
         Player player = (Player)sender;
         int total = 0;
+        int offer_id = -1;
         for(Offer o: DatabaseManager.GetSellerOffers(player.getName(),item))
         {
             total += o.item.getAmount();
+            // There should only be one offer for a given item from a given player, right?
+            offer_id = o.id;
         }
 		if(total == 0)
 		{
@@ -48,9 +51,14 @@ public class Cancel {
 			return;
 		}
         item.setAmount(total);
-        new InventoryManager(player).addItem(item);
-        DatabaseManager.RemoveSellerOffers(player,item);
-        Chatty.SendSuccess(sender, "Removed " + Chatty.FormatAmount(total) + " " + Chatty.FormatItem(args[0]));
+        int remaining = new InventoryManager(player).addItem(item).getAmount();
+        if(remaining > 0 && offer_id > -1) {
+            DatabaseManager.UpdateQuantity(offer_id, remaining);
+            Chatty.SendError(sender,"Unable to complete cancellation, inventory full and no more drops allowed.");
+        } else {
+            DatabaseManager.RemoveSellerOffers(player,item);
+        }
+        Chatty.SendSuccess(sender, "Removed " + Chatty.FormatAmount(total - remaining) + " " + Chatty.FormatItem(args[0]));
 
 
     }

@@ -1,5 +1,7 @@
 package org.blockface.virtualshop.util;
 
+import org.blockface.virtualshop.managers.ConfigManager;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -7,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 import java.util.Map;
+import org.blockface.virtualshop.Chatty;
 
 public class InventoryManager {
     private final Inventory _inv;
@@ -109,9 +112,27 @@ public class InventoryManager {
     		if(amount<=0) break;
     	}
     	
-    	if((amount>0)&&((_player!=null)||(_loc!=null))) for(; amount>0; amount -= max) ((_player!=null) ? (_player.getLocation()) : (_loc)).getWorld().dropItemNaturally(((_player!=null) ? (_player.getLocation()) : (_loc)), new ItemStack(stack.getType(), ((amount>max) ? (max) : (amount)), stack.getDurability(), handleData(stack.getData()))); else return new ItemStack(stack.getType(), amount, stack.getDurability(), handleData(stack.getData()));
+        // -1 means default behavior, no limit on item drops when inventory is full
+        // Otherwise, limit the items dropped to the specified number (rounding down to the nearest stack size)
+        int max_drops = ConfigManager.MaxItemDrops();
+        
+        int drops = 0;
+        if((amount>0)&&((_player!=null)||(_loc!=null))) 
+            for(; amount>0 && (max_drops >= 0 ? (drops+((amount>max)?max:amount) <= max_drops) : true); amount -= max) {
+                
+                ((_player!=null) ? 
+                        (_player.getLocation()) : 
+                        (_loc)).getWorld().dropItemNaturally(((_player!=null) ? 
+                            (_player.getLocation()) : 
+                            (_loc)), new ItemStack(stack.getType(), ((amount>max) ? 
+                                (max) : 
+                                (amount)), stack.getDurability(), handleData(stack.getData()))); 
+                drops += (amount>max ? max : amount);
+            }
+        else return new ItemStack(stack.getType(), amount, stack.getDurability(), handleData(stack.getData()));
     	
-    	return new ItemStack(stack.getType(), 0, stack.getDurability(), handleData(stack.getData()));
+        // Remaining amount of items not dropped is returned here
+    	return new ItemStack(stack.getType(), amount > 0 ? amount : 0, stack.getDurability(), handleData(stack.getData()));
     }
     
     public ItemStack remove(ItemStack stack) {
