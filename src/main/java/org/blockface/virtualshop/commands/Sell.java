@@ -46,7 +46,7 @@ public class Sell
         ItemStack item = ItemDb.get(args[1], amount);
 		if(args[1].equalsIgnoreCase("hand"))
 		{
-			item=new ItemStack(player.getItemInHand().getType(),amount);
+			item=new ItemStack(player.getItemInHand().getType(),amount, player.getItemInHand().getDurability());
 			args[1] = ItemDb.reverseLookup(item);
 		}
 		if(item==null)
