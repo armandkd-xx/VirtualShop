@@ -16,7 +16,6 @@ import java.io.IOException;
 
 public class VirtualShop extends JavaPlugin {
     public void onDisable() {
-        DatabaseManager.Close();
     }
 
     public void onEnable() {
