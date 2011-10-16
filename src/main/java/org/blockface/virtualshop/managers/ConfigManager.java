@@ -26,6 +26,11 @@ public class ConfigManager
 	{
 		return config.getBoolean("broadcast-offers", true);
 	}
+        
+        	public static Integer MaxItemDrops()
+	{
+		return config.getInt("max-item-drops", -1);
+	}
 
     public static Integer getPort() {
         return config.getInt("MySQL.port",3306);
