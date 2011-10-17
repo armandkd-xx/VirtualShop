@@ -26,7 +26,6 @@ commands:
     vs:
         description: Displays help.
         usage: /vs
-
 permissions:
     virtualshop.sell:
         description: Allow usage of /sell
