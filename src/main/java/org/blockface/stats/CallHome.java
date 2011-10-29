@@ -93,7 +93,6 @@ class CallTask implements Runnable {
                 plugin.getServer().getPort(),
                 hash,
                 Bukkit.getVersion());
-        System.out.println(url);
         new URL(url).openConnection().getInputStream();
     }
 }
