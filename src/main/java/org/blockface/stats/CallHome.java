@@ -23,92 +23,78 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package org.blockface.bukkitstats;
+package org.blockface.stats;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.config.Configuration;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
-/*
-@
- */
+import java.util.UUID;
 
 public class CallHome{
 
     private static Configuration cfg=null;
 
     public static void load(Plugin plugin) {
-        if(cfg==null) {
-            if(!verifyConfig()) return;
-        }
-        if(cfg.getBoolean("opt-out",false)) return;
-        plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin,new CallTask(plugin,cfg.getBoolean("list-server",true)),0L,20L*60L*60);
-        System.out.println(plugin.getDescription().getName() + " is keeping usage stats an. To opt-out for whatever bizarre reason, check plugins/stats.");
+        if(cfg==null) if(!verifyConfig()) return;
 
+        if(cfg.getBoolean("opt-out",false)) return;
+        plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin,new CallTask(plugin,cfg.getString("hash")),10L,20L*60L*60);
+        System.out.println(plugin.getDescription().getName() + " is keeping usage stats. To opt-out for whatever bizarre reason, check plugins/stats/config.yml.");
     }
 
     private static Boolean verifyConfig() {
-        Boolean ret = true;
         File config = new File("plugins/stats/config.yml");
-        if(!config.getParentFile().exists()) config.getParentFile().mkdir();
-        if(!config.exists()) try {
-            config.createNewFile();
-            ret = false;
-            System.out.println("BukkitStats has initialized for the first time. To opt-out check plugins/stats");
-        } catch (IOException e) {
-            return false;
-        }
+        boolean  ret = true;
+        if(!config.exists()) {
+            System.out.println("BukkitStats is initializing for the first time. To opt-out check plugins/stats");
+            ret = false;}
+
         cfg=new Configuration(config);
         cfg.load();
-        cfg.getBoolean("opt-out",false);
-        cfg.getBoolean("list-server", true);
+        cfg.getBoolean("opt-out", false);
+        cfg.getString("hash", UUID.randomUUID().toString());
         cfg.save();
+
+        if(!config.exists()) {
+            System.out.println("BukkitStats failed to save configuration.");
+            return false;
+        }
+
         return ret;
     }
-
-
 }
 
 class CallTask implements Runnable {
     private Plugin plugin;
-    private int pub=1;
+    private String hash;
 
-    public CallTask(Plugin plugin,Boolean pub) {
+    public CallTask(Plugin plugin, String hash) {
         this.plugin = plugin;
-        if(!pub) this.pub = 0;
+        this.hash = hash;
     }
-
-
 
     public void run() {
         try {
-            if(postUrl().contains("Success")) return;
+            postUrl();
         } catch (Exception ignored) {
+            ignored.printStackTrace();
+            System.out.println("Could not call home.");
         }
-        System.out.println("Could not call home.");
     }
 
-    private String postUrl() throws Exception {
-        String url = String.format("http://usage.blockface.org/update.php?name=%s&build=%s&plugin=%s&port=%s&public=%s",
+    private void postUrl() throws Exception {
+        String url = String.format("http://usage.blockface.org/update.php?name=%s&build=%s&plugin=%s&port=%s&hash=%s&bukkit=%s",
                 plugin.getServer().getName(),
-                plugin.getDescription().getVersion(),
-                plugin.getDescription().getName(),
+                plugin.getDescription().getVersion().replaceAll(" ", "%20"),
+                plugin.getDescription().getName().replaceAll(" ", "%20"),
                 plugin.getServer().getPort(),
-                pub);
-        URL oracle = new URL(url);
-        URLConnection yc = oracle.openConnection();
-        BufferedReader in = new BufferedReader(
-                                new InputStreamReader(
-                                yc.getInputStream()));
-        String inputLine;
-        String result = "";
-        while ((inputLine = in.readLine()) != null)
-            result += inputLine;
-        return result;
+                hash,
+                Bukkit.getVersion());
+        System.out.println(url);
+        new URL(url).openConnection().getInputStream();
     }
 }
+

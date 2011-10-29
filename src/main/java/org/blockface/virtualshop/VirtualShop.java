@@ -1,6 +1,6 @@
 package org.blockface.virtualshop;
 
-import org.blockface.bukkitstats.CallHome;
+import org.blockface.stats.CallHome;
 import org.blockface.virtualshop.commands.*;
 import org.blockface.virtualshop.events.ServerEvents;
 import org.blockface.virtualshop.managers.ConfigManager;
