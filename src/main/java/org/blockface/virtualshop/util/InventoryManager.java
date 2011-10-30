@@ -80,7 +80,7 @@ public class InventoryManager {
     }
     
     public boolean contains(ItemStack stack, boolean meta) {
-    	return this.contains(stack, true, false);
+    	return this.contains(stack, meta, false);
     }
     
     public boolean contains(ItemStack stack, boolean meta, boolean durability) {
