@@ -119,7 +119,7 @@ public class InventoryManager {
     }
     
     public ItemStack remove(ItemStack stack, boolean meta) {
-    	return this.remove(stack, true, false);
+    	return this.remove(stack, meta, false);
     }
     
     public ItemStack remove(ItemStack stack, boolean meta, boolean durability) {
