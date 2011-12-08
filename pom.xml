@@ -14,7 +14,7 @@
     <repository>
       <id>blockface</id>
       <name>Blockface</name>
-      <url>http://repo.blockface.org/repository</url>
+      <url>http://repo.org/repository</url>
     </repository>
   </repositories>
   <build>
